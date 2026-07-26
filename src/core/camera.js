@@ -8,8 +8,8 @@ import { clamp, lerp, damp, TAU, angleDelta, smoothstep } from './math.js';
  * the mid-line.
  */
 export const CAM_MODES = [
-  { id: 'chase',    name: 'CHASE',    dist: 6.35, height: 2.05, look: 1.05, lookAhead: 9.5,  fov: 58, roll: 0.55, shake: 1.0 },
-  { id: 'chasefar', name: 'WIDE',     dist: 9.20, height: 3.15, look: 1.20, lookAhead: 14.0, fov: 55, roll: 0.42, shake: 0.8 },
+  { id: 'chase',    name: 'CHASE',    dist: 5.70, height: 1.78, look: 0.95, lookAhead: 9.0,  fov: 58, roll: 0.55, shake: 1.0 },
+  { id: 'chasefar', name: 'WIDE',     dist: 8.60, height: 2.85, look: 1.15, lookAhead: 13.0, fov: 55, roll: 0.42, shake: 0.8 },
   { id: 'bumper',   name: 'BUMPER',   dist: -1.9, height: 0.72, look: 0.72, lookAhead: 22.0, fov: 68, roll: 0.30, shake: 1.4 },
   { id: 'hood',     name: 'HOOD',     dist: -0.4, height: 1.20, look: 1.05, lookAhead: 20.0, fov: 63, roll: 0.35, shake: 1.2 },
   { id: 'cockpit',  name: 'COCKPIT',  dist: 0.55, height: 1.16, look: 1.10, lookAhead: 18.0, fov: 66, roll: 0.75, shake: 1.3 },

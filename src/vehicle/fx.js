@@ -223,7 +223,7 @@ export class CarFX {
 
     // ── Wet-road spray: a rooster tail behind every wheel ────────────────
     if (wet > 0.18 && spd > 4) {
-      const rate = wet * clamp(spd / 12, 0, 2.4) * 74;
+      const rate = Math.min(wet, 0.7) * clamp(spd / 12, 0, 2.0) * 62;
       this._sprayAcc += rate * dt;
       while (this._sprayAcc >= 1) {
         this._sprayAcc -= 1;
@@ -241,7 +241,7 @@ export class CarFX {
           life: 0.40 + Math.random() * 0.42,
           size: 0.26 + Math.random() * 0.30,
           growth: 2.3,
-          peakAlpha: 0.11 * wet,
+          peakAlpha: 0.085 * Math.min(wet, 0.8),
           r: 0.90, g: 0.94, b: 1.0,
           drag: 2.9, gravity: -3.4, fadeIn: 0.14,
         });

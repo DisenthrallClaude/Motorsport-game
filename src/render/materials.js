@@ -110,7 +110,7 @@ export function makeRoadMaterial(opts = {}) {
          if (uHasRefl > 0.5 && _wet > 0.004) {
            vec3 _V = normalize(vViewPosition);
            float _fres = pow(clamp(1.0 - dot(normalize(normal), _V), 0.0, 1.0), 3.0);
-           _fres = mix(0.14, 1.0, _fres);
+           _fres = mix(0.20, 1.0, _fres);
 
            vec2 _ruv = vReflUv.xy / max(vReflUv.w, 0.0001);
            // Wobble the mirror image with the surface normal: this is what

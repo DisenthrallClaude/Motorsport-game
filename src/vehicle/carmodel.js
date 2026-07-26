@@ -248,7 +248,7 @@ function makePlateTexture(text = 'HORIZON') {
 //  CAR
 // ════════════════════════════════════════════════════════════════════════════
 export const CAR_PRESETS = [
-  { id: 'apex-gt', name: 'APEX GT-R', color: 0x1c2026, accent: 0x0f1114, rim: 0x1e2126, wing: 'big',  plate: 'HORIZON' },
+  { id: 'apex-gt', name: 'APEX GT-R', color: 0x15181d, accent: 0x0f1114, rim: 0x1e2126, wing: 'big',  plate: 'HORIZON' },
   { id: 'vermilion', name: 'VERMILION', color: 0x9c1410, accent: 0x14100e, rim: 0x2a2c30, wing: 'big', plate: 'APEX 01' },
   { id: 'arctic', name: 'ARCTIC', color: 0xdfe4ea, accent: 0x16181c, rim: 0x141518, wing: 'duck', plate: 'FROST' },
   { id: 'midnight', name: 'MIDNIGHT', color: 0x101828, accent: 0x0a0d14, rim: 0x8e939a, wing: 'big', plate: 'NOCTIS' },

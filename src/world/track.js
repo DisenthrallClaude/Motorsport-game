@@ -310,8 +310,8 @@ export class Track {
     const kerbMat = makeSurface(kerbTex, { repeat: [1, 1], roughness: 0.72, envMapIntensity: 0.6 });
     // Pavements are wet too on rain themes — reuse the reflective material.
     if ((t.wetness ?? 0) > 0.35) {
-      pavMat.roughness = 0.5;
-      pavMat.envMapIntensity = 0.9;
+      pavMat.roughness = 0.62;
+      pavMat.envMapIntensity = 0.7;
     }
 
     const pavWidth = t.pavementWidth ?? 4.2;

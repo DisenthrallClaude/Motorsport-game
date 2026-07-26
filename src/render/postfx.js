@@ -15,8 +15,8 @@ export const LAYER = {
 
 export const QUALITY = {
   low:   { renderScale: 0.72, msaa: 0, ssao: false, aoScale: 0.5,  bloomMips: 4, rays: false, dnScale: 0.5,  reflScale: 0.0,  shadow: 1024, sharpen: 0.18, aniso: 4,  motion: 0.55, shadowFar: 130 },
-  med:   { renderScale: 0.88, msaa: 0, ssao: true,  aoScale: 0.5,  bloomMips: 5, rays: true,  dnScale: 0.5,  reflScale: 0.4,  shadow: 1536, sharpen: 0.22, aniso: 8,  motion: 0.8,  shadowFar: 170 },
-  high:  { renderScale: 1.0,  msaa: 4, ssao: true,  aoScale: 0.6,  bloomMips: 6, rays: true,  dnScale: 0.6,  reflScale: 0.55, shadow: 2048, sharpen: 0.28, aniso: 16, motion: 1.0,  shadowFar: 210 },
+  med:   { renderScale: 0.88, msaa: 0, ssao: true,  aoScale: 0.5,  bloomMips: 5, rays: true,  dnScale: 0.5,  reflScale: 0.5,  shadow: 1536, sharpen: 0.22, aniso: 8,  motion: 0.8,  shadowFar: 170 },
+  high:  { renderScale: 1.0,  msaa: 4, ssao: true,  aoScale: 0.6,  bloomMips: 6, rays: true,  dnScale: 0.6,  reflScale: 0.62, shadow: 2048, sharpen: 0.28, aniso: 16, motion: 1.0,  shadowFar: 210 },
   ultra: { renderScale: 1.0,  msaa: 8, ssao: true,  aoScale: 0.75, bloomMips: 7, rays: true,  dnScale: 0.75, reflScale: 0.7,  shadow: 4096, sharpen: 0.32, aniso: 16, motion: 1.0,  shadowFar: 280 },
 };
 
