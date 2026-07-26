@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write     # needed to refresh the gh-pages branch
   pages: write
   id-token: write
 
@@ -17,6 +17,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Builds the site and publishes it to the gh-pages branch.
+  # This path works with Pages source = "Deploy from a branch" and needs no
+  # repository settings that a workflow token can't grant itself.
   build:
     runs-on: ubuntu-latest
     steps:
@@ -33,21 +36,37 @@ jobs:
       - name: Build
         run: npm run build
 
-      - uses: actions/configure-pages@v5
-        with:
-          # Turn Pages on automatically if the repo hasn't had it enabled yet.
-          enablement: true
+      - name: Publish build to gh-pages branch
+        run: |
+          cd docs
+          touch .nojekyll
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Publish ${GITHUB_SHA::7}"
+          git push -f \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
 
+  # Second path, for Pages source = "GitHub Actions".
+  # Skipped harmlessly if Pages has never been enabled — the gh-pages branch
+  # above is already published either way, so this must not fail the run.
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/configure-pages@v5
+        continue-on-error: true
       - id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true

@@ -7,6 +7,13 @@ load time from code.
 
 **▶ Play: https://disenthrallclaude.github.io/motorsport-game/**
 
+> First-time setup: GitHub Pages has to be switched on once by a repository
+> admin — a workflow token isn't allowed to create the Pages site itself.
+> In **Settings → Pages**, set the source to **Deploy from a branch →
+> `gh-pages` / `(root)`**. That branch already holds a built copy of the site,
+> and the workflow refreshes it on every push. (Source = *GitHub Actions* also
+> works; the same workflow covers both.)
+
 ---
 
 ## Destinations
