@@ -146,7 +146,10 @@ export class World {
       return styleList[0];
     };
 
-    const pavEdge = (theme.road.pavementWidth ?? 4.5) + 0.4;
+    // All row offsets below are measured outward from the kerb line; the
+    // half-width of the road is added at placement time because the road
+    // narrows through corners.
+    const pavEdge = 0.34 + (theme.road.pavementWidth ?? 4.5) + 0.5;
     const rows = [
       { off: pavEdge + (B.setback ?? 1.5), depth: B.depth ?? 20, hScale: 1.0, front: true },
     ];
@@ -167,7 +170,7 @@ export class World {
         while (s < track.length && guard++ < 4000) {
           const a = track.at(s);
           const lotW = lerp(B.lotMin ?? 12, B.lotMax ?? 26, rng());
-          const offset = row.off + row.depth / 2;
+          const offset = a.width * 0.5 + row.off + row.depth / 2;
           // Inside-of-corner compression: shrink the step so lots never overlap.
           const compress = clamp(1 - a.curvature * offset * side, 0.25, 2.4);
           const step = lotW / compress;
@@ -179,7 +182,7 @@ export class World {
 
           const lotPos = new THREE.Vector3()
             .copy(a.pos)
-            .addScaledVector(a.right, side * (row.off + row.depth / 2));
+            .addScaledVector(a.right, side * (a.width * 0.5 + row.off + row.depth / 2));
           let blocked = false;
           for (const spot of this._landmarkSpots) {
             const dx = lotPos.x - spot.p.x, dz = lotPos.z - spot.p.z;
@@ -232,14 +235,16 @@ export class World {
     const batcher = new GeoBatcher();
     const kit = this.props;
     const pavEdge = (theme.road.pavementWidth ?? 4.5);
-    const lampOff = 0.34 + pavEdge * 0.35;
-    const outerOff = 0.34 + pavEdge * 0.82;
+    // Distances from the kerb line outward across the pavement.
+    const lampOff = 0.34 + pavEdge * 0.32;
+    const outerOff = 0.34 + pavEdge * 0.76;
 
     // Convention: a prop's local +X points at the road, local +Z runs with
     // the traffic. Lamp arms, awnings and signage all lean the right way.
+    // `lateral` is measured from the kerb, so props never end up in a lane.
     const place = (obj, s, lateral, side, extraRot = 0, y = 0) => {
       const a = track.at(s);
-      obj.position.copy(a.pos).addScaledVector(a.right, side * lateral);
+      obj.position.copy(a.pos).addScaledVector(a.right, side * (a.width * 0.5 + lateral));
       obj.position.y = a.pos.y + y;
       obj.rotation.y = a.heading + (side > 0 ? 0 : Math.PI) + extraRot;
       batcher.addObject(obj);
@@ -258,7 +263,7 @@ export class World {
         const a = track.at(s);
         this.lampPositions.push(
           a.pos.clone()
-            .addScaledVector(a.right, side * (lampOff + kit.lampLightOffset(lampStyle) * -side))
+            .addScaledVector(a.right, side * (a.width * 0.5 + lampOff) - kit.lampLightOffset(lampStyle) * side)
             .setY(a.pos.y + kit.lampLightHeight(lampStyle))
         );
       }
@@ -340,7 +345,7 @@ export class World {
       for (let s = 40; s < track.length; s += 90 + rng() * 140) {
         const side = rng() < 0.5 ? -1 : 1;
         const f = kit.flagPole(flagTex, 0.62);
-        place(f, s, 0.34 + (theme.road.pavementWidth ?? 4.5) + (theme.buildings.setback ?? 1.5) - 0.4, side, 0, 6.5 + rng() * 3);
+        place(f, s, 0.34 + pavEdge + (theme.buildings.setback ?? 1.5) - 0.5, side, 0, 6.5 + rng() * 3);
       }
     }
 
@@ -355,9 +360,11 @@ export class World {
     for (let s = 30; s < track.length; s += 180 + rng() * 220) {
       if (rng() < 0.45) {
         const side = rng() < 0.5 ? -1 : 1;
+        // Cones coning off the edge of a lane — negative offsets sit inside
+        // the carriageway rather than on the pavement.
         const n = 3 + ((rng() * 4) | 0);
         for (let k = 0; k < n; k++) {
-          place(kit.cone(), s + k * 3.2, 0.34 + 1.2 + k * 0.25, side);
+          place(kit.cone(), s + k * 3.2, -1.4 - k * 0.32, side);
         }
       }
     }
@@ -463,9 +470,9 @@ export class World {
     if (!this.crossingS || !this.crossingS.length) return;
     const track = this.track;
     const mat = new THREE.MeshStandardMaterial({
-      color: 0xe4e0d4, roughness: 0.62, metalness: 0,
+      color: 0xbdb9ad, roughness: 0.66, metalness: 0,
       polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3,
-      transparent: true, opacity: 0.82,
+      transparent: true, opacity: 0.62,
     });
     const batcher = new GeoBatcher();
     for (const s of this.crossingS) {

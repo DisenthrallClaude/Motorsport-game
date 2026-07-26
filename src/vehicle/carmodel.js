@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { makeCarPaint, makeGlass, makeChrome, makeCarbon, makeRubber } from '../render/materials.js';
 import { makeBarGlow, makeGlowSprite, canvas, toTexture } from '../render/textures.js';
 import { LAYER } from '../render/postfx.js';
+import { mergeSubtree } from '../world/batch.js';
 import { clamp, lerp, TAU, smoothstep, makeRNG } from '../core/math.js';
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -622,6 +623,8 @@ export class CarModel {
       steer.add(brake);
 
       steer.position.set(wd.x * (D.track / 2 + (wd.front ? 0.0 : 0.03)), r, wd.z);
+      steer.userData.noMerge = true;   // steers and spins at runtime
+      spin.userData.noMerge = true;
       g.add(steer);
       this.wheels.push({
         steer, spin, front: wd.front, side: wd.x, radius: r,
@@ -656,6 +659,7 @@ export class CarModel {
     blob.position.y = 0.02;
     blob.renderOrder = 1;
     blob.layers.set(LAYER.FX);
+    blob.userData.noMerge = true;
     g.add(blob);
     this.shadowBlob = blob;
 
@@ -665,6 +669,19 @@ export class CarModel {
         o.receiveShadow = true;
       }
     });
+    // Transparent glass has to stay its own draw call so it sorts correctly.
+    cabin.userData.noMerge = true;
+    this.group.updateMatrixWorld(true);
+
+    // ── Collapse the ~250 body pieces into one mesh per material ──────────
+    mergeSubtree(g);
+    for (const w of this.wheels) {
+      // Tyre + rim collapse into the spinning pivot; the brake assembly
+      // collapses into the steering pivot. `spin` stays flagged so the second
+      // call leaves the rolling parts where they are.
+      mergeSubtree(w.spin);
+      mergeSubtree(w.steer);
+    }
     this.group.updateMatrixWorld(true);
   }
 

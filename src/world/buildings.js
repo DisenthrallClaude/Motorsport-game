@@ -166,8 +166,12 @@ export class BuildingKit {
       color: B.glassColor ?? 0x121820, roughness: 0.08, metalness: 0.55,
       envMapIntensity: 2.0, dithering: true,
     });
+    // Shopfronts read as lit interiors rather than black holes — this is a
+    // big part of what makes a street feel inhabited.
     this.mats.shopGlass = new THREE.MeshStandardMaterial({
-      color: 0x0d1218, roughness: 0.06, metalness: 0.3, envMapIntensity: 2.4,
+      color: 0x1c242e, roughness: 0.12, metalness: 0.25, envMapIntensity: 1.6,
+      emissive: B.shopGlow ?? 0xffd6a0,
+      emissiveIntensity: t.night ? 1.5 : 0.30,
     });
     this.mats.awning = mk(B.awningColor ?? 0x7a2230, 0.85);
     this.mats.copper = mk(0x4f7f6d, 0.62, 0.4, 0.9);

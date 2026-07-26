@@ -36,7 +36,7 @@ export const THEMES = [
 
   road: {
     markings: 'uk',
-    asphaltColor: 0x35363b,
+    asphaltColor: 0x55575e,
     tileLength: 12,
     wetness: 0.95,
     reflectStrength: 1.05,
@@ -61,13 +61,13 @@ export const THEMES = [
     cloudColor: 0xfff2e2, cloudDark: 0x5a6272,
     sunIntensity: 5.6, lightColor: 0xffe4c4,
     hemiSky: 0xa8c6ea, hemiGround: 0x6a6154, hemiIntensity: 1.85,
-    rimColor: 0x9dbdf0, rimIntensity: 0.40,
+    rimColor: 0x9dbdf0, rimIntensity: 0.10,
     shadowRadius: 95, skyExposure: 1.0,
   },
   fog: { color: 0xbcc6d4, sunColor: 0xffdcb0, density: 0.0026, height: 140 },
   grade: {
-    exposure: 1.18, bloom: 0.80, rays: 0.95, ao: 0.82,
-    saturation: 1.05, contrast: 1.13, vignette: 0.44, grain: 0.026, chroma: 0.85,
+    exposure: 1.16, bloom: 0.58, rays: 0.95, ao: 0.82,
+    saturation: 1.05, contrast: 1.045, vignette: 0.34, grain: 0.026, chroma: 0.85,
     lift: [0.006, 0.008, 0.016], gamma: [1.0, 1.0, 0.99], gain: [1.02, 1.0, 0.99],
     dof: 0.5, dofRange: 300,
   },
@@ -147,7 +147,7 @@ export const THEMES = [
 
   road: {
     markings: 'eu',
-    asphaltColor: 0x33333a,
+    asphaltColor: 0x53535b,
     tileLength: 12,
     wetness: 0.18,
     reflectStrength: 0.55,
@@ -172,13 +172,13 @@ export const THEMES = [
     cloudColor: 0xffd8b0, cloudDark: 0x6b5a63,
     sunIntensity: 4.8, lightColor: 0xffc98a,
     hemiSky: 0x8fb4e8, hemiGround: 0x6a5642, hemiIntensity: 1.55,
-    rimColor: 0xb0c8ff, rimIntensity: 0.38,
+    rimColor: 0xb0c8ff, rimIntensity: 0.10,
     shadowRadius: 100, skyExposure: 1.0,
   },
   fog: { color: 0xd8b995, sunColor: 0xffcb8c, density: 0.0024, height: 150 },
   grade: {
-    exposure: 1.0, bloom: 0.78, rays: 0.95, ao: 0.78,
-    saturation: 1.12, contrast: 1.08, vignette: 0.42, grain: 0.022, chroma: 0.8,
+    exposure: 1.02, bloom: 0.56, rays: 0.95, ao: 0.78,
+    saturation: 1.12, contrast: 1.03, vignette: 0.32, grain: 0.022, chroma: 0.8,
     lift: [0.012, 0.006, 0.004], gamma: [0.99, 1.0, 1.02], gain: [1.04, 1.0, 0.96],
     dof: 0.45, dofRange: 320,
   },
@@ -235,7 +235,7 @@ export const THEMES = [
   timeLabel: 'NIGHT',
   night: true,
   rain: 1.0,
-  envIntensity: 0.85,
+  envIntensity: 1.5,
 
   track: {
     width: 15.0,
@@ -252,7 +252,7 @@ export const THEMES = [
 
   road: {
     markings: 'jp',
-    asphaltColor: 0x25262a,
+    asphaltColor: 0x3f4147,
     tileLength: 12,
     wetness: 1.0,
     reflectStrength: 1.25,
@@ -276,15 +276,15 @@ export const THEMES = [
     sunColor: 0x2a3a5a, sunSize: 0.02, sunGlow: 0.25,
     haze: 0.5, cloud: 0.78, cloudSharp: 0.3,
     cloudColor: 0x453a52, cloudDark: 0x14141e,
-    sunIntensity: 0.35, lightColor: 0x6a7ea8,
-    hemiSky: 0x3a4666, hemiGround: 0x241e28, hemiIntensity: 1.05,
-    rimColor: 0xff5a9a, rimIntensity: 0.30,
+    sunIntensity: 0.55, lightColor: 0x7a8ec0,
+    hemiSky: 0x5a6a94, hemiGround: 0x3a2e3c, hemiIntensity: 2.4,
+    rimColor: 0xff5a9a, rimIntensity: 0.10,
     stars: 0.15, shadowRadius: 80, skyExposure: 1.0,
   },
   fog: { color: 0x1c2030, sunColor: 0x3a3050, density: 0.0052, height: 90 },
   grade: {
-    exposure: 1.35, bloom: 1.15, rays: 0.16, ao: 0.7,
-    saturation: 1.22, contrast: 1.12, vignette: 0.55, grain: 0.042, chroma: 1.35,
+    exposure: 1.5, bloom: 0.80, rays: 0.16, ao: 0.55,
+    saturation: 1.22, contrast: 1.05, vignette: 0.42, grain: 0.042, chroma: 1.35,
     lift: [0.010, 0.004, 0.024], gamma: [1.0, 1.0, 0.97], gain: [1.0, 0.99, 1.06],
     dof: 0.65, dofRange: 200,
   },
@@ -362,7 +362,7 @@ export const THEMES = [
 
   road: {
     markings: 'cn',
-    asphaltColor: 0x35353a,
+    asphaltColor: 0x5a5c62,
     tileLength: 12,
     wetness: 0.10,
     reflectStrength: 0.42,
@@ -387,13 +387,13 @@ export const THEMES = [
     cloudColor: 0xffdcb4, cloudDark: 0x7a6c68,
     sunIntensity: 4.2, lightColor: 0xffd49a,
     hemiSky: 0xa8c0e0, hemiGround: 0x7a6a52, hemiIntensity: 1.75,
-    rimColor: 0xc0d4ff, rimIntensity: 0.32,
+    rimColor: 0xc0d4ff, rimIntensity: 0.10,
     shadowRadius: 110, skyExposure: 1.0,
   },
   fog: { color: 0xd6bE9a, sunColor: 0xffd49a, density: 0.0038, height: 170 },
   grade: {
-    exposure: 1.0, bloom: 0.68, rays: 0.9, ao: 0.72,
-    saturation: 1.04, contrast: 1.05, vignette: 0.4, grain: 0.024, chroma: 0.75,
+    exposure: 1.02, bloom: 0.52, rays: 0.9, ao: 0.72,
+    saturation: 1.04, contrast: 1.05, vignette: 0.30, grain: 0.024, chroma: 0.75,
     lift: [0.014, 0.010, 0.004], gamma: [0.99, 1.0, 1.03], gain: [1.03, 1.0, 0.95],
     dof: 0.4, dofRange: 340,
   },
@@ -469,7 +469,7 @@ export const THEMES = [
 
   road: {
     markings: 'us',
-    asphaltColor: 0x2e2f33,
+    asphaltColor: 0x4f5157,
     tileLength: 12,
     wetness: 0.62,
     reflectStrength: 0.85,
@@ -494,13 +494,13 @@ export const THEMES = [
     cloudColor: 0xfff0dc, cloudDark: 0x5a6068,
     sunIntensity: 4.6, lightColor: 0xffe3bc,
     hemiSky: 0xa0bfe8, hemiGround: 0x5c5448, hemiIntensity: 1.65,
-    rimColor: 0xa8c4ff, rimIntensity: 0.36,
+    rimColor: 0xa8c4ff, rimIntensity: 0.10,
     shadowRadius: 100, skyExposure: 1.0,
   },
   fog: { color: 0xc2c9d2, sunColor: 0xffd9ac, density: 0.0027, height: 150 },
   grade: {
-    exposure: 1.0, bloom: 0.66, rays: 0.75, ao: 0.8,
-    saturation: 1.02, contrast: 1.09, vignette: 0.46, grain: 0.03, chroma: 0.9,
+    exposure: 1.02, bloom: 0.52, rays: 0.75, ao: 0.8,
+    saturation: 1.02, contrast: 1.035, vignette: 0.34, grain: 0.03, chroma: 0.9,
     lift: [0.004, 0.006, 0.014], gamma: [1.0, 1.0, 1.0], gain: [1.02, 1.0, 0.99],
     dof: 0.48, dofRange: 300,
   },
@@ -575,7 +575,7 @@ export const THEMES = [
 
   road: {
     markings: 'us',
-    asphaltColor: 0x3a3a3e,
+    asphaltColor: 0x616369,
     tileLength: 12,
     wetness: 0.05,
     reflectStrength: 0.3,
@@ -600,13 +600,13 @@ export const THEMES = [
     cloudColor: 0xffffff, cloudDark: 0x9aa8b8,
     sunIntensity: 6.0, lightColor: 0xfff2d8,
     hemiSky: 0xbcd8ff, hemiGround: 0x9c8a68, hemiIntensity: 2.0,
-    rimColor: 0xd0e4ff, rimIntensity: 0.32,
+    rimColor: 0xd0e4ff, rimIntensity: 0.10,
     shadowRadius: 120, skyExposure: 1.0,
   },
   fog: { color: 0xd8cfba, sunColor: 0xfff0d8, density: 0.0024, height: 190 },
   grade: {
-    exposure: 0.92, bloom: 0.62, rays: 0.45, ao: 0.8,
-    saturation: 1.02, contrast: 1.1, vignette: 0.38, grain: 0.018, chroma: 0.7,
+    exposure: 0.95, bloom: 0.48, rays: 0.45, ao: 0.8,
+    saturation: 1.02, contrast: 1.04, vignette: 0.30, grain: 0.018, chroma: 0.7,
     lift: [0.004, 0.004, 0.006], gamma: [1.0, 1.0, 1.0], gain: [1.01, 1.0, 0.99],
     dof: 0.35, dofRange: 380,
   },

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#05070c" />
+<title>APEX HORIZON — World Tour</title>
+<meta name="description" content="APEX HORIZON — a photoreal open-city racing game running in your browser. London, Paris, Tokyo, Beijing, New York, Dubai." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏎️</text></svg>" />
+  <script type="module" crossorigin src="./assets/index-DIpzk7OV.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/three-C7BRjnrZ.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-BlPNmxzj.css">
+</head>
+<body>
+  <canvas id="stage"></canvas>
+
+  <!-- ══════════════════════ LOADING ══════════════════════ -->
+  <div id="boot" class="boot">
+    <div class="boot-bg"></div>
+    <div class="boot-inner">
+      <div class="boot-mark">
+        <span class="bm-a">APEX</span><span class="bm-b">HORIZON</span>
+      </div>
+      <div class="boot-sub">WORLD TOUR</div>
+      <div class="boot-bar"><i id="bootFill"></i></div>
+      <div class="boot-status" id="bootStatus">INITIALISING RENDERER</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ MAIN MENU ══════════════════════ -->
+  <div id="menu" class="menu hidden">
+    <div class="menu-vignette"></div>
+    <header class="menu-head">
+      <div class="menu-mark"><span class="bm-a">APEX</span><span class="bm-b">HORIZON</span></div>
+      <div class="menu-tag">SELECT DESTINATION</div>
+    </header>
+
+    <div class="dest-rail" id="destRail"></div>
+
+    <div class="menu-detail">
+      <div class="md-left">
+        <div class="md-city" id="mdCity">LONDON</div>
+        <div class="md-country" id="mdCountry">UNITED KINGDOM</div>
+        <p class="md-desc" id="mdDesc"></p>
+        <div class="md-stats">
+          <div class="ms"><span class="ms-k">LENGTH</span><span class="ms-v" id="mdLen">—</span></div>
+          <div class="ms"><span class="ms-k">TURNS</span><span class="ms-v" id="mdTurns">—</span></div>
+          <div class="ms"><span class="ms-k">WEATHER</span><span class="ms-v" id="mdWx">—</span></div>
+          <div class="ms"><span class="ms-k">TIME</span><span class="ms-v" id="mdTime">—</span></div>
+        </div>
+      </div>
+      <div class="md-right">
+        <div class="opt-row">
+          <span class="opt-k">LAPS</span>
+          <div class="seg" id="segLaps">
+            <button data-v="1">1</button><button data-v="2" class="on">2</button><button data-v="3">3</button><button data-v="5">5</button>
+          </div>
+        </div>
+        <div class="opt-row">
+          <span class="opt-k">RIVALS</span>
+          <div class="seg" id="segRivals">
+            <button data-v="1">1</button><button data-v="3">3</button><button data-v="5" class="on">5</button><button data-v="7">7</button>
+          </div>
+        </div>
+        <div class="opt-row">
+          <span class="opt-k">QUALITY</span>
+          <div class="seg" id="segQual">
+            <button data-v="low">LOW</button><button data-v="med">MED</button><button data-v="high" class="on">HIGH</button><button data-v="ultra">ULTRA</button>
+          </div>
+        </div>
+        <div class="opt-row">
+          <span class="opt-k">ASSISTS</span>
+          <div class="seg" id="segAssist">
+            <button data-v="off">OFF</button><button data-v="on" class="on">ON</button>
+          </div>
+        </div>
+        <button class="race-btn" id="raceBtn"><span>START RACE</span><i></i></button>
+        <div class="ctrl-hint">
+          <b>W A S D</b> / <b>↑←↓→</b> drive &nbsp;·&nbsp; <b>SPACE</b> handbrake &nbsp;·&nbsp; <b>SHIFT</b> boost &nbsp;·&nbsp; <b>C</b> camera &nbsp;·&nbsp; <b>R</b> reset &nbsp;·&nbsp; <b>P</b> photo mode
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ HUD ══════════════════════ -->
+  <div id="hud" class="hud hidden">
+
+    <!-- top-left objective stack -->
+    <div class="tl">
+      <div class="objpanel">
+        <div class="opr"><span class="opk">TIME REMAINING:</span><span class="opv" id="hTimeLeft">01:24.810</span></div>
+        <div class="opr"><span class="opk">3 STARS:</span><span class="opv" id="hStar3">02:05.000</span></div>
+        <div class="opr cur"><span class="opk">CURRENT:</span><span class="opv" id="hCurrent">00:00.000</span></div>
+      </div>
+      <div class="objline">
+        <span class="obji">i</span>
+        <span class="objtxt" id="hObjective">Reach the destination</span>
+      </div>
+      <div class="lapline" id="hLapLine"><span>LAP</span><b id="hLap">1/2</b></div>
+    </div>
+
+    <!-- top-right position -->
+    <div class="tr">
+      <div class="poswrap">
+        <span class="posk">POSITION</span>
+        <span class="posv" id="hPos">1<em>/</em>6</span>
+      </div>
+    </div>
+
+    <!-- center notices -->
+    <div class="notice" id="hNotice"></div>
+    <div class="countdown" id="hCount"></div>
+
+    <!-- speed/score popups -->
+    <div class="skillfeed" id="hSkill"></div>
+
+    <!-- bottom-left minimap -->
+    <div class="bl">
+      <div class="dist" id="hDist">1.3 MI</div>
+      <div class="mapwrap">
+        <canvas id="minimap" width="380" height="380"></canvas>
+        <div class="compass">N</div>
+      </div>
+      <div class="pills">
+        <div class="pill" id="hName">ANNA</div>
+        <div class="pill">CHAT <i>H</i></div>
+      </div>
+    </div>
+
+    <!-- bottom-right tach -->
+    <div class="br">
+      <canvas id="tach" width="520" height="520"></canvas>
+      <div class="assists"><span id="aABS">ABS</span><span id="aTCR">TCR</span><span id="aSTM">STM</span></div>
+      <div class="gear" id="hGear">1</div>
+      <div class="mph">MPH</div>
+      <div class="speed" id="hSpeed">000</div>
+    </div>
+
+    <!-- boost bar -->
+    <div class="boostwrap"><div class="boostbar"><i id="hBoost"></i></div><span>BOOST</span></div>
+  </div>
+
+  <!-- ══════════════════════ RESULTS ══════════════════════ -->
+  <div id="results" class="results hidden">
+    <div class="res-card">
+      <div class="res-head" id="resHead">RACE COMPLETE</div>
+      <div class="res-stars" id="resStars"></div>
+      <div class="res-time" id="resTime">00:00.000</div>
+      <table class="res-table"><tbody id="resRows"></tbody></table>
+      <div class="res-btns">
+        <button id="resRetry">RETRY</button>
+        <button id="resMenu" class="ghost">DESTINATIONS</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ PAUSE ══════════════════════ -->
+  <div id="pause" class="pause hidden">
+    <div class="pause-card">
+      <div class="pause-title">PAUSED</div>
+      <button id="pResume">RESUME</button>
+      <button id="pRestart" class="ghost">RESTART</button>
+      <button id="pQuit" class="ghost">QUIT TO MENU</button>
+    </div>
+  </div>
+
+  <div id="photoHint" class="photohint hidden">PHOTO MODE · <b>P</b> exit · <b>mouse</b> orbit · <b>wheel</b> zoom</div>
+  <div id="fps" class="fps hidden"></div>
+
+</body>
+</html>

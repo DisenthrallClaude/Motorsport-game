@@ -322,6 +322,12 @@ export class PostFX {
     r.setClearColor(0x000000, 1);
     r.clear(true, true, false);
     r.render(scene, camera);
+    // Snapshot the main pass before the post chain overwrites info.render.
+    this.stats = {
+      calls: r.info.render.calls,
+      triangles: r.info.render.triangles,
+      programs: r.info.programs ? r.info.programs.length : 0,
+    };
     // three resolves a multisampled target automatically on the next
     // setRenderTarget, so sceneRT.texture is safe to sample from here on.
     const sceneTex = this.sceneRT.texture;

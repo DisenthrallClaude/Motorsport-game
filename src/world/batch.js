@@ -113,6 +113,88 @@ export class GeoBatcher {
   }
 }
 
+/**
+ * Collapse a subtree into one mesh per material, in place.
+ *
+ * Used for the cars: a hypercar is ~250 little meshes, and six of them on a
+ * grid was costing more draw calls than the entire city. Subtrees flagged
+ * `userData.noMerge` (wheels, anything that animates) are left alone.
+ */
+export function mergeSubtree(root) {
+  root.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(root.matrixWorld).invert();
+  const buckets = new Map();
+  const doomed = [];
+
+  const visit = (obj) => {
+    for (const child of [...obj.children]) {
+      if (child.userData.noMerge) continue;
+      if (child.isMesh && child.geometry) {
+        const mat = Array.isArray(child.material) ? child.material[0] : child.material;
+        const g = normaliseGeometry(child.geometry.clone());
+        g.applyMatrix4(new THREE.Matrix4().multiplyMatrices(inv, child.matrixWorld));
+        if (!buckets.has(mat)) buckets.set(mat, { geos: [], cast: false, receive: false });
+        const b = buckets.get(mat);
+        b.geos.push(g);
+        b.cast = b.cast || child.castShadow;
+        b.receive = b.receive || child.receiveShadow;
+        doomed.push(child);
+      }
+      visit(child);
+    }
+  };
+  visit(root);
+
+  for (const o of doomed) {
+    o.geometry.dispose();
+    o.removeFromParent();
+  }
+  // Drop the now-empty container groups we just emptied out.
+  for (const child of [...root.children]) {
+    if (!child.userData.noMerge && !child.isMesh && child.children.length === 0) child.removeFromParent();
+  }
+
+  for (const [mat, b] of buckets) {
+    if (!b.geos.length) continue;
+    let merged = null;
+    try { merged = BufferGeometryUtils.mergeGeometries(b.geos, false); } catch { merged = null; }
+    if (!merged) {
+      for (const g of b.geos) {
+        const m = new THREE.Mesh(g, mat);
+        m.castShadow = b.cast; m.receiveShadow = b.receive;
+        root.add(m);
+      }
+      continue;
+    }
+    merged.computeBoundingSphere();
+    const mesh = new THREE.Mesh(merged, mat);
+    mesh.castShadow = b.cast;
+    mesh.receiveShadow = b.receive;
+    root.add(mesh);
+    for (const g of b.geos) g.dispose();
+  }
+  return root;
+}
+
+function normaliseGeometry(g) {
+  if (!g.attributes.normal) g.computeVertexNormals();
+  if (!g.attributes.uv) {
+    const count = g.attributes.position.count;
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(new Float32Array(count * 2), 2));
+  }
+  for (const k of Object.keys(g.attributes)) {
+    if (k !== 'position' && k !== 'normal' && k !== 'uv') g.deleteAttribute(k);
+  }
+  if (!g.index) {
+    const count = g.attributes.position.count;
+    const idx = count > 65535 ? new Uint32Array(count) : new Uint16Array(count);
+    for (let i = 0; i < count; i++) idx[i] = i;
+    g.setIndex(new THREE.BufferAttribute(idx, 1));
+  }
+  g.groups = [];
+  return g;
+}
+
 function sliceGeometry(geo, start, count) {
   if (!geo.index) return null;
   const idx = geo.index.array;

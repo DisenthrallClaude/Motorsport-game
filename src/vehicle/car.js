@@ -76,13 +76,26 @@ export class Car {
       blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false,
     });
     this.poolMaterial = poolMat;
-    const pool = new THREE.Mesh(new THREE.PlaneGeometry(8, 20), poolMat);
+    const pool = new THREE.Mesh(new THREE.PlaneGeometry(9, 24), poolMat);
     pool.rotation.x = -Math.PI / 2;
-    pool.position.set(0, -0.34, -9.5);
+    pool.position.set(0, 0.04, -11);
     pool.layers.set(LAYER.FX);
     pool.renderOrder = 3;
     this.model.chassis.add(pool);
     this.lightPool = pool;
+
+    // At night the additive cones alone aren't enough — without a real light
+    // the road, the traffic and the buildings ahead stay black. One shadowless
+    // spot per car is cheap and transforms the night circuits.
+    if (this.night) {
+      const spot = new THREE.SpotLight(0xfff0d2, 0, 78, 0.62, 0.55, 1.1);
+      spot.castShadow = false;
+      spot.position.set(0, 0.62, -1.9);
+      spot.target.position.set(0, -1.6, -34);
+      this.model.chassis.add(spot);
+      this.model.chassis.add(spot.target);
+      this.headlightSpot = spot;
+    }
   }
 
   reset(pos, yaw) {
@@ -140,8 +153,12 @@ export class Car {
       if (ph.gear > this._prevGear && ph.throttle > 0.5) this.exhaustPop = 1;
       this._prevGear = ph.gear;
     }
-    if (ph.throttle < 0.05 && ph.rpm > ph.p.redline * 0.62 && Math.random() < dt * 6) {
-      this.exhaustPop = 0.7;
+    // Overrun crackle: occasional, not a constant flame thrower.
+    this._popCool = Math.max(0, (this._popCool ?? 0) - dt);
+    if (ph.throttle < 0.05 && ph.brake < 0.2 && ph.rpm > ph.p.redline * 0.70
+        && this._popCool <= 0 && Math.random() < dt * 1.6) {
+      this.exhaustPop = 0.55;
+      this._popCool = 0.35 + Math.random() * 0.9;
     }
 
     this.syncVisual(dt);
@@ -184,8 +201,11 @@ export class Car {
       brakeHeat: ph.brakeHeat,
     });
     if (this.beamMaterial) {
-      this.beamMaterial.opacity = this._headlightOn * 0.13;
-      this.poolMaterial.opacity = this._headlightOn * 0.34;
+      this.beamMaterial.opacity = this._headlightOn * (this.night ? 0.16 : 0.09);
+      this.poolMaterial.opacity = this._headlightOn * (this.night ? 0.42 : 0.20);
+    }
+    if (this.headlightSpot) {
+      this.headlightSpot.intensity = this._headlightOn * (this.isPlayer ? 190 : 120);
     }
 
     // Ground the fake contact shadow even when the body pitches.

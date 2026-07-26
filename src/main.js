@@ -151,8 +151,9 @@ class Game {
 
     // Player starts at the back so there's something to race for.
     const playerSlot = slots[Math.min(fieldSize - 1, slots.length - 1)];
+    const playerPreset = CAR_PRESETS[clamp(opts.preset ?? 0, 0, CAR_PRESETS.length - 1)];
     this.player = new Car({
-      preset: CAR_PRESETS[0], isPlayer: true, track: this.track,
+      preset: playerPreset, isPlayer: true, track: this.track,
       name: 'YOU', night: theme.night,
     });
     this.player.physics.assists = opts.assists !== false;
@@ -181,7 +182,7 @@ class Game {
     // ── Systems ───────────────────────────────────────────────────────────
     this.fx = new CarFX(this.engine.scene, theme);
     this.traffic = new TrafficSystem(this.engine.scene, this.track, theme, { seed: 4242 });
-    this.rainAmount = theme.rain ?? 0;
+    this.rainAmount = opts.rain ?? theme.rain ?? 0;
     if (this.rainAmount > 0.08) {
       this.rain = new RainSystem(this.engine.scene, this.quality === 'low' ? 900 : 2400, {
         opacity: 0.34 + this.rainAmount * 0.2,
@@ -681,9 +682,7 @@ window.__diag = () => {
     traffic: g.traffic?.vehicles?.length ?? 0,
     speed: g.player ? +g.player.physics.speedMph.toFixed(1) : 0,
     pos: g.player ? [+g.player.physics.pos.x.toFixed(1), +g.player.physics.pos.z.toFixed(1)] : null,
-    drawCalls: g.engine?.renderer.info.render.calls,
-    triangles: g.engine?.renderer.info.render.triangles,
-    programs: g.engine?.renderer.info.programs?.length,
+    mainPass: g.engine?.postfx.stats,
     memory: g.engine?.renderer.info.memory,
   };
 };
@@ -707,6 +706,8 @@ if (params.get('city')) {
       rivals: Number(params.get('rivals') ?? 5),
       quality: params.get('q') || 'high',
       assists: params.get('assists') !== '0',
+      rain: params.get('rain') !== null ? Number(params.get('rain')) : undefined,
+      preset: params.get('preset') !== null ? Number(params.get('preset')) : undefined,
     }).then(() => {
       if (params.get('cam') !== null) game.camera.setMode(Number(params.get('cam')));
       if (params.get('t') === null) return;

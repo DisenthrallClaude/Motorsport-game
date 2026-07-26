@@ -21,7 +21,7 @@ export function makeRoadMaterial(opts = {}) {
     roughness,
     metalness: 0.02,
     color,
-    envMapIntensity: 0.55,
+    envMapIntensity: 1.0,
     normalScale: new THREE.Vector2(0.9, 0.9),
     dithering: true,
   });
@@ -109,8 +109,8 @@ export function makeRoadMaterial(opts = {}) {
         `#include <opaque_fragment>
          if (uHasRefl > 0.5 && _wet > 0.004) {
            vec3 _V = normalize(vViewPosition);
-           float _fres = pow(clamp(1.0 - dot(normalize(normal), _V), 0.0, 1.0), 4.0);
-           _fres = mix(0.045, 1.0, _fres);
+           float _fres = pow(clamp(1.0 - dot(normalize(normal), _V), 0.0, 1.0), 3.0);
+           _fres = mix(0.14, 1.0, _fres);
 
            vec2 _ruv = vReflUv.xy / max(vReflUv.w, 0.0001);
            // Wobble the mirror image with the surface normal: this is what
@@ -130,7 +130,7 @@ export function makeRoadMaterial(opts = {}) {
            float _k = clamp(_wet * _fres * uReflStrength, 0.0, 0.94);
            gl_FragColor.rgb = mix(gl_FragColor.rgb, _refl * uReflTint, _k);
            // Slight darkening under standing water sells the depth.
-           gl_FragColor.rgb *= mix(1.0, 0.82, _puddle * uWetness);
+           gl_FragColor.rgb *= mix(1.0, 0.90, _puddle * uWetness);
          }`
       );
     mat.userData.shader = shader;
@@ -199,7 +199,7 @@ function clampHighlights(mat, { minRough = 0.16, minClearcoatRough = 0.20, hdrCe
 export function makeCarPaint(color = 0x1a1c22, opts = {}) {
   const {
     metalness = 0.72, roughness = 0.24, clearcoat = 0.9,
-    clearcoatRoughness = 0.09, flake = 0.55, envIntensity = 1.1,
+    clearcoatRoughness = 0.09, flake = 0.55, envIntensity = 0.72,
   } = opts;
   const m = new THREE.MeshPhysicalMaterial({
     color,

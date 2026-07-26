@@ -234,40 +234,40 @@ export function makeRoadTexture(spec) {
     const half = roadWidth / 2;
     if (markings === 'uk') {
       // Double yellow parking restriction hugging both kerbs.
-      paint(0.55, 0.10, '#d8b13a', 0.85 * wear, null);
-      paint(0.78, 0.10, '#d8b13a', 0.85 * wear, null);
-      paint(roadWidth - 0.55, 0.10, '#d8b13a', 0.85 * wear, null);
-      paint(roadWidth - 0.78, 0.10, '#d8b13a', 0.85 * wear, null);
+      paint(0.55, 0.10, '#e8bf42', 0.95 * wear, null);
+      paint(0.78, 0.10, '#e8bf42', 0.95 * wear, null);
+      paint(roadWidth - 0.55, 0.10, '#e8bf42', 0.95 * wear, null);
+      paint(roadWidth - 0.78, 0.10, '#e8bf42', 0.95 * wear, null);
       // White centre line (long dashes) + lane dividers.
-      paint(half, 0.14, '#e8e6e0', 0.80 * wear, [4.0, 2.0]);
-      paint(half - 3.5, 0.12, '#dedbd4', 0.62 * wear, [2.0, 4.0]);
-      paint(half + 3.5, 0.12, '#dedbd4', 0.62 * wear, [2.0, 4.0]);
+      paint(half, 0.14, '#f2f0ea', 0.96 * wear, [4.0, 2.0]);
+      paint(half - 3.5, 0.12, '#e6e3dc', 0.80 * wear, [2.0, 4.0]);
+      paint(half + 3.5, 0.12, '#e6e3dc', 0.80 * wear, [2.0, 4.0]);
     } else if (markings === 'eu') {
-      paint(half, 0.14, '#ecebe6', 0.82 * wear, [3.0, 3.0]);
-      paint(half - 3.4, 0.11, '#dedbd4', 0.55 * wear, [1.5, 4.5]);
-      paint(half + 3.4, 0.11, '#dedbd4', 0.55 * wear, [1.5, 4.5]);
-      paint(0.45, 0.13, '#e6e4de', 0.55 * wear, null);
-      paint(roadWidth - 0.45, 0.13, '#e6e4de', 0.55 * wear, null);
+      paint(half, 0.14, '#f4f2ec', 0.96 * wear, [3.0, 3.0]);
+      paint(half - 3.4, 0.11, '#e6e3dc', 0.76 * wear, [1.5, 4.5]);
+      paint(half + 3.4, 0.11, '#e6e3dc', 0.76 * wear, [1.5, 4.5]);
+      paint(0.45, 0.13, '#eeece6', 0.80 * wear, null);
+      paint(roadWidth - 0.45, 0.13, '#eeece6', 0.80 * wear, null);
     } else if (markings === 'us') {
-      paint(half - 0.09, 0.11, '#e2c243', 0.85 * wear, null);
-      paint(half + 0.09, 0.11, '#e2c243', 0.85 * wear, null);
-      paint(half - 3.6, 0.12, '#eeece6', 0.6 * wear, [3.0, 6.0]);
-      paint(half + 3.6, 0.12, '#eeece6', 0.6 * wear, [3.0, 6.0]);
-      paint(0.5, 0.14, '#eeece6', 0.62 * wear, null);
-      paint(roadWidth - 0.5, 0.14, '#eeece6', 0.62 * wear, null);
+      paint(half - 0.09, 0.11, '#f0cf4c', 0.95 * wear, null);
+      paint(half + 0.09, 0.11, '#f0cf4c', 0.95 * wear, null);
+      paint(half - 3.6, 0.12, '#f4f2ec', 0.84 * wear, [3.0, 6.0]);
+      paint(half + 3.6, 0.12, '#f4f2ec', 0.84 * wear, [3.0, 6.0]);
+      paint(0.5, 0.14, '#f4f2ec', 0.86 * wear, null);
+      paint(roadWidth - 0.5, 0.14, '#f4f2ec', 0.86 * wear, null);
     } else if (markings === 'jp') {
-      paint(half, 0.15, '#f2f0ea', 0.85 * wear, [5.0, 5.0]);
-      paint(half - 3.3, 0.11, '#e8e6e0', 0.5 * wear, [2.0, 4.0]);
-      paint(half + 3.3, 0.11, '#e8e6e0', 0.5 * wear, [2.0, 4.0]);
-      paint(0.6, 0.14, '#f2f0ea', 0.55 * wear, null);
-      paint(roadWidth - 0.6, 0.14, '#f2f0ea', 0.55 * wear, null);
+      paint(half, 0.15, '#f8f6f0', 0.96 * wear, [5.0, 5.0]);
+      paint(half - 3.3, 0.11, '#eeece6', 0.76 * wear, [2.0, 4.0]);
+      paint(half + 3.3, 0.11, '#eeece6', 0.76 * wear, [2.0, 4.0]);
+      paint(0.6, 0.14, '#f8f6f0', 0.82 * wear, null);
+      paint(roadWidth - 0.6, 0.14, '#f8f6f0', 0.82 * wear, null);
     } else if (markings === 'cn') {
-      paint(half - 0.10, 0.12, '#e8d24a', 0.8 * wear, null);
-      paint(half + 0.10, 0.12, '#e8d24a', 0.8 * wear, null);
-      paint(half - 3.6, 0.12, '#f0eee8', 0.58 * wear, [4.0, 2.0]);
-      paint(half + 3.6, 0.12, '#f0eee8', 0.58 * wear, [4.0, 2.0]);
-      paint(0.5, 0.15, '#f0eee8', 0.6 * wear, null);
-      paint(roadWidth - 0.5, 0.15, '#f0eee8', 0.6 * wear, null);
+      paint(half - 0.10, 0.12, '#f2dc55', 0.94 * wear, null);
+      paint(half + 0.10, 0.12, '#f2dc55', 0.94 * wear, null);
+      paint(half - 3.6, 0.12, '#f6f4ee', 0.84 * wear, [4.0, 2.0]);
+      paint(half + 3.6, 0.12, '#f6f4ee', 0.84 * wear, [4.0, 2.0]);
+      paint(0.5, 0.15, '#f6f4ee', 0.86 * wear, null);
+      paint(roadWidth - 0.5, 0.15, '#f6f4ee', 0.86 * wear, null);
     }
     ctx.globalAlpha = 1;
     ctx.restore();
@@ -280,7 +280,7 @@ export function makeRoadTexture(spec) {
         const i = (y * W + x) * 4;
         const n = fbm(x / pxPerM_x * 2.4 + 300, y / pxPerM_y * 2.4 + 300, 3) * 0.5 + 0.5;
         const scuff = saturate((n - 0.42) * 2.4);
-        const wearMul = lerp(1.0, 0.62 + scuff * 0.5, 0.55);
+        const wearMul = lerp(1.0, 0.74 + scuff * 0.4, 0.45);
         // Only pull painted (bright) pixels toward the asphalt beneath them.
         const lum = (md[i] + md[i + 1] + md[i + 2]) / 3;
         if (lum > 70) {

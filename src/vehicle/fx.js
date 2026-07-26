@@ -178,7 +178,7 @@ export class CarFX {
     this.smoke = new ParticlePool(340, smokeTex, { intensity: 0.9, renderOrder: 6, maxSize: 210 });
     this.spray = new ParticlePool(420, smokeTex, { intensity: 1.0, renderOrder: 7, maxSize: 150 });
     this.sparks = new ParticlePool(160, glowTex, { additive: true, intensity: 3.2, renderOrder: 8 });
-    this.flame = new ParticlePool(60, glowTex, { additive: true, intensity: 5.0, renderOrder: 9 });
+    this.flame = new ParticlePool(60, glowTex, { additive: true, intensity: 2.2, renderOrder: 9, maxSize: 70 });
 
     scene.add(this.smoke.points, this.spray.points, this.sparks.points, this.flame.points);
 
@@ -280,10 +280,10 @@ export class CarFX {
           vx: ph.forward.x * -6 + j() * 1.4,
           vy: 0.4 + Math.random(),
           vz: ph.forward.z * -6 + j() * 1.4,
-          life: 0.10 + Math.random() * 0.10,
-          size: 0.24 + Math.random() * 0.22,
-          growth: 1.4,
-          peakAlpha: 0.95,
+          life: 0.08 + Math.random() * 0.08,
+          size: 0.13 + Math.random() * 0.12,
+          growth: 0.9,
+          peakAlpha: 0.75,
           r: 1.0, g: 0.48, b: 0.14,
           drag: 5.0, gravity: 1.2, fadeIn: 0.08,
         });
