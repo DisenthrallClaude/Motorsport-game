@@ -34,6 +34,9 @@ jobs:
         run: npm run build
 
       - uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on automatically if the repo hasn't had it enabled yet.
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
